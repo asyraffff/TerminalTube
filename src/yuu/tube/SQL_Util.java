@@ -274,4 +274,27 @@ public class SQL_Util {
         return "";
     }
 
+    public static String displayYoutubeChannelName(){
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT DISTINCT youtubeName FROM video");
+            ResultSet rs = ps.executeQuery();
+            ArrayList<String> list = new ArrayList<String>();
+            while (rs.next()){
+                list.add(rs.getString("youtubeName"));
+            }
+            String[] result = new String[list.size()];
+            result = list.toArray(result);
+
+            for(int i = 0; i < result.length ; i++){
+                System.out.println("👉 " + result[i]);
+            }
+
+            ps.close();
+            rs.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 }

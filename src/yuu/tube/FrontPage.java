@@ -99,7 +99,7 @@ public class FrontPage {
         System.out.println("[ 1 ] 🔥 Watch Trending");
         System.out.println("[ 2 ] 🛠 Add New Video");
         System.out.println("[ 3 ] 🌈 Watch my Video");
-        System.out.println("[ 4 ] 🚀 Search Video");
+        System.out.println("[ 4 ] 🚀 Search Youtube Channel");
         System.out.println("[ 5 ] 💁 Edit account");
         System.out.println("[ 6 ] 😔 Log Out");
         System.out.println("");
@@ -191,5 +191,13 @@ public class FrontPage {
                 System.out.println("Choose [username / email / password] only 😊");
         }
         SQL_Util.userDetails(username);
+    }
+
+    public static void search(){
+        System.out.println("");
+        System.out.println("------------------------------");
+        System.out.println("🚀 Search Youtube Channel");
+        System.out.println("");
+        SQL_Util.displayYoutubeChannelName();
     }
 }

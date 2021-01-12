@@ -52,6 +52,9 @@ public class Console {
             case 3:
                 FrontPage.openVideo();
                 break;
+            case 4:
+                FrontPage.search();
+                break;
             case 5:
                 FrontPage.editAccount();
                 break;
