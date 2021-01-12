@@ -96,7 +96,8 @@ public class FrontPage {
         System.out.println("[ 3 ] 🌈 Watch my Video");
         System.out.println("[ 4 ] 🚀 Search Youtube Channel");
         System.out.println("[ 5 ] 💁 Edit account");
-        System.out.println("[ 6 ] 😔 Log Out");
+        System.out.println("[ 6 ] 🏖 About Yuu-Tube");
+        System.out.println("[ 7 ] 😔 Log Out");
         System.out.println("");
         System.out.print("Please choose [1 - 6] : ");
     }
@@ -232,5 +233,21 @@ public class FrontPage {
         String chooseVid = scanner.next();
         String filePath = SQL_Util.findFileForThatVideo(chooseVid);
         Video.open(filePath, chooseVid);
+    }
+
+    public static void aboutPage(){
+        System.out.println("");
+        System.out.println("------------------------------");
+        System.out.println("🏖 About Yuu-Tube");
+        System.out.println("");
+        System.out.println("Youtube was created at 31 December 2020 👴");
+        SQL_Util.aboutVideoAndUserDatabase();
+        System.out.println("");
+        System.out.println("OUR TEAM 🏁");
+        System.out.println("1️⃣ Asyraf   🧑‍💻");
+        System.out.println("2️⃣ Afiq     🧑‍💻");
+        System.out.println("3️⃣ Tianyi   👨🏻‍💻");
+        System.out.println("4️⃣ Keisava  👨🏻‍💻");
+        System.out.println("5️⃣ Arina    👩‍💻");
     }
 }

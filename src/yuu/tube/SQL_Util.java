@@ -360,5 +360,62 @@ public class SQL_Util {
         }
     }
 
+    public static void aboutVideoAndUserDatabase(){
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT DISTINCT COUNT(vid) as totalVideo FROM video");
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                int totalVideo = rs.getInt("totalVideo");
+
+                System.out.println("Total Video : " + totalVideo);
+                totalChannel();
+                totalUser();
+
+                ps.close();
+                rs.close();
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static int totalChannel(){
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT DISTINCT youtubeName FROM video");
+            ResultSet rs = ps.executeQuery();
+            ArrayList<String> list = new ArrayList<String>();
+            while (rs.next()){
+                list.add(rs.getString("youtubeName"));
+            }
+            String[] result = new String[list.size()];
+            result = list.toArray(result);
+
+            System.out.println("Total Youtube Channel : " + result.length);
+
+            ps.close();
+            rs.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static int totalUser(){
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT DISTINCT COUNT(uid) as totalUser FROM user");
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                int totalUser = rs.getInt("totalUser");
+
+                System.out.println("Total User : " + totalUser);
+
+                ps.close();
+                rs.close();
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
 
 }

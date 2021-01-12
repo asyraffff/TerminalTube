@@ -59,6 +59,9 @@ public class Console {
                 FrontPage.editAccount();
                 break;
             case 6:
+                FrontPage.aboutPage();
+                break;
+            case 7:
                 System.out.println("");
                 System.out.println("Bye Bye 👋");
                 break;
