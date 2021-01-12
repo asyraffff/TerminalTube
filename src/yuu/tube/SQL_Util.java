@@ -297,4 +297,27 @@ public class SQL_Util {
         return "";
     }
 
+    public static void displayVideoListFromYoutubeChannel(String youtubeChannelName){
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT vid, title FROM video WHERE youtubeName=?");
+            ps.setString(1, youtubeChannelName);
+            ResultSet rs = ps.executeQuery();
+            ArrayList<String> list = new ArrayList<String>();
+            while (rs.next()){
+                list.add(rs.getString("title"));
+            }
+            String[] result = new String[list.size()];
+            result = list.toArray(result);
+
+            for(int i = 0; i < result.length ; i++){
+                System.out.println("▶️ " + result[i]);
+            }
+
+            ps.close();
+            rs.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -69,23 +69,18 @@ public class FrontPage {
     public static void chooseTrendingVideo(int numberVideo){
         switch (numberVideo){
             case 1:
-//                OpenVideo.trendingVideo(trend1);
                 Video.open(trendVid, trend1);
                 break;
             case 2:
-//                OpenVideo.trendingVideo(trend2);
                 Video.open(trendVid, trend2);
                 break;
             case 3:
-//                OpenVideo.trendingVideo(trend3);
                 Video.open(trendVid, trend3);
                 break;
             case 4:
-//                OpenVideo.trendingVideo(trend4);
                 Video.open(trendVid, trend4);
                 break;
             case 5:
-//                OpenVideo.trendingVideo(trend5);
                 Video.open(trendVid, trend5);
                 break;
             default:
@@ -199,5 +194,15 @@ public class FrontPage {
         System.out.println("🚀 Search Youtube Channel");
         System.out.println("");
         SQL_Util.displayYoutubeChannelName();
+        System.out.println("");
+        System.out.print("Choose Youtube Channel to open 💡 : ");
+        String answer = scanner.next();
+        System.out.println("");
+        SQL_Util.displayVideoListFromYoutubeChannel(answer);
+        System.out.println("");
+        System.out.print("Choose video to open : ");
+        String chooseVid = scanner.next();
+        String filePath = SQL_Util.findFileForThatVideo(chooseVid);
+        Video.open(filePath, chooseVid);
     }
 }
