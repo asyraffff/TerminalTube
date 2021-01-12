@@ -69,4 +69,12 @@ public class Console {
                 System.out.println("Choose [1 - 6] only 😊");
         }
     }
+
+    public static void backToHomePage(String answer){
+        if (answer.equals("y")){
+            FrontPage.choices();
+            int userChoose = scanner.nextInt();
+            choose(userChoose);
+        }
+    }
 }

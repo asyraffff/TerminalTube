@@ -54,12 +54,8 @@ public class FrontPage {
                 break;
             case "n":
                 System.out.print("Back to Homepage ? y | n : ");
-                String result = scanner.next();
-                if (result.equals("y")){
-                    choices();
-                    int userChoose = scanner.nextInt();
-                    Console.choose(userChoose);
-                }
+                String answerToHomeFromTrendVid = scanner.next();
+                Console.backToHomePage(answerToHomeFromTrendVid);
                 break;
             default:
                 System.out.println("y | n only 😊");
@@ -115,6 +111,10 @@ public class FrontPage {
         System.out.print("Title : ");
         String titleVideo = scanner.next();
         Video.addVideo(username, youtubeChannelName, fileName, titleVideo);
+
+        System.out.print("Back to Homepage ? y | n : ");
+        String answerToHomeFromWatchAddVideo = scanner.next();
+        Console.backToHomePage(answerToHomeFromWatchAddVideo);
     }
 
     public static void openVideo(){
@@ -138,15 +138,15 @@ public class FrontPage {
                 String vidTitle = scanner.next();
                 String filePathName = SQL_Util.findFileForThatVideo(answer);
                 Video.open(filePathName, vidTitle);
+
+                System.out.print("Back to Homepage ? y | n : ");
+                String answerToHomeFromWatchAgainVideo = scanner.next();
+                Console.backToHomePage(answerToHomeFromWatchAgainVideo);
                 break;
             case "n":
                 System.out.print("Back to Homepage ? y | n : ");
-                String result = scanner.next();
-                if (result.equals("y")){
-                    choices();
-                    int userChoose = scanner.nextInt();
-                    Console.choose(userChoose);
-                }
+                String answerToHomeFromOpenVideo = scanner.next();
+                Console.backToHomePage(answerToHomeFromOpenVideo);
                 break;
             default:
                 System.out.println("y | n only 😊");
@@ -200,12 +200,8 @@ public class FrontPage {
                         break;
                     case "n":
                         System.out.print("Back to Homepage ? y | n : ");
-                        String result = scanner.next();
-                        if (result.equals("y")){
-                            choices();
-                            int userChoose = scanner.nextInt();
-                            Console.choose(userChoose);
-                        }
+                        String answerToHome = scanner.next();
+                        Console.backToHomePage(answerToHome);
                         break;
                     default:
                         System.out.println("y or n only 😊");
@@ -215,6 +211,11 @@ public class FrontPage {
                 System.out.println("Choose [username / email / password] only 😊");
         }
         SQL_Util.userDetails(username);
+
+        System.out.println("");
+        System.out.print("Back to Homepage ? y | n : ");
+        String answerToHomeFromEditAcc = scanner.next();
+        Console.backToHomePage(answerToHomeFromEditAcc);
     }
 
     public static void search(){
@@ -233,9 +234,13 @@ public class FrontPage {
         String chooseVid = scanner.next();
         String filePath = SQL_Util.findFileForThatVideo(chooseVid);
         Video.open(filePath, chooseVid);
+
+        System.out.print("Back to Homepage ? y | n : ");
+        String answerToHomeFromSearch = scanner.next();
+        Console.backToHomePage(answerToHomeFromSearch);
     }
 
-    public static void aboutPage(){
+    public static void aboutPage() {
         System.out.println("");
         System.out.println("------------------------------");
         System.out.println("🏖 About Yuu-Tube");
@@ -249,5 +254,9 @@ public class FrontPage {
         System.out.println("3️⃣ Tianyi   👨🏻‍💻");
         System.out.println("4️⃣ Keisava  👨🏻‍💻");
         System.out.println("5️⃣ Arina    👩‍💻");
+        System.out.println("");
+        System.out.print("Back to Homepage ? y | n : ");
+        String answerToHomeFromAbout = scanner.next();
+        Console.backToHomePage(answerToHomeFromAbout);
     }
 }
