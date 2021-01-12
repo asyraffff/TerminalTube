@@ -118,10 +118,10 @@ public class SQL_Util {
         }
     }
 
-    public static int returnUserVideo(int videoId){
+    public static int returnUserVideo(int userId){
        try {
            PreparedStatement ps = connection.prepareStatement("SELECT * FROM VideoUser Where uid=?");
-           ps.setInt(1, videoId);
+           ps.setInt(1, userId);
            ResultSet rs = ps.executeQuery();
            ArrayList<Integer> list= new ArrayList<Integer>();
            while (rs.next()){
@@ -132,7 +132,6 @@ public class SQL_Util {
 
            for(int i = 0; i < result.length ; i++){
                displayVideoList(result[i]);
-//               System.out.println(i + " " + result[i]);
            }
            ps.close();
            rs.close();
@@ -184,10 +183,11 @@ public class SQL_Util {
 
     public static void userDetails(String username){
         try {
-            PreparedStatement ps = connection.prepareStatement("select  * from YoutubeDB.user where username=?");
+            PreparedStatement ps = connection.prepareStatement("select * from user where username=?");
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
+                int userId = rs.getInt("uid");
                 String name = rs.getString("username");
                 String email = rs.getString("email");
                 String password = rs.getString("password");
@@ -196,6 +196,24 @@ public class SQL_Util {
                 System.out.println("Username : " + name);
                 System.out.println("Email : " + email);
                 System.out.println("Password : " + password);
+                userVideosCount(userId);
+                ps.close();
+                rs.close();
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void userVideosCount(int userId){
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT COUNT(vid) as count FROM VideoUser WHERE uid=?;");
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                int count = rs.getInt("count");
+
+                System.out.println("Total Video : " + count);
                 ps.close();
                 rs.close();
             }
@@ -319,5 +337,28 @@ public class SQL_Util {
             e.printStackTrace();
         }
     }
+
+    public static void deleteVideo1(int vid){
+        try {
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM VideoUser WHERE vid=?");
+            ps.setInt(1, vid);
+            ps.execute();
+            ps.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteVideo2(int vid){
+        try {
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM video WHERE vid=?");
+            ps.setInt(1, vid);
+            ps.execute();
+            ps.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 
 }

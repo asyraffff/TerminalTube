@@ -29,4 +29,10 @@ public class Video {
             e.printStackTrace();
         }
     }
+
+    public static void delete(String title){
+        int vid = SQL_Util.getVid(title);
+        SQL_Util.deleteVideo1(vid);
+        SQL_Util.deleteVideo2(vid);
+    }
 }

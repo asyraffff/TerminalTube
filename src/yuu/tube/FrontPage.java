@@ -182,6 +182,34 @@ public class FrontPage {
                 String oldPass = SQL_Util.getPassword(username);
                 SQL_Util.editPassword(oldPass, newPass);
                 break;
+            case "video":
+                System.out.println("");
+                System.out.print("Username : ");
+                String name = scanner.next();
+                int userId = SQL_Util.getUid(name);
+                SQL_Util.returnUserVideo(userId);
+                System.out.println("");
+                System.out.print("Do you want to delete video ? [y / n] : ");
+                String answerForDeleteVideo = scanner.next();
+                switch (answerForDeleteVideo.toLowerCase()){
+                    case "y":
+                        System.out.print("Choose video to delete : ");
+                        String videoName = scanner.next();
+                        Video.delete(videoName);
+                        break;
+                    case "n":
+                        System.out.print("Back to Homepage ? y | n : ");
+                        String result = scanner.next();
+                        if (result.equals("y")){
+                            choices();
+                            int userChoose = scanner.nextInt();
+                            Console.choose(userChoose);
+                        }
+                        break;
+                    default:
+                        System.out.println("y or n only 😊");
+                }
+                break;
             default:
                 System.out.println("Choose [username / email / password] only 😊");
         }

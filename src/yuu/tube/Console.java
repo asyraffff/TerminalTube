@@ -35,7 +35,7 @@ public class Console {
                 FrontPage.choices();
                 break;
             default:
-                System.out.println("\n🚨 S or L word only 🚨");
+                System.out.print("\n🚨 S or L word only 🚨 : ");
                 String answerAgain = scanner.next();
                 signupOrLogin(answerAgain);
         }
