@@ -328,7 +328,7 @@ public class SQL_Util {
             result = list.toArray(result);
 
             for(int i = 0; i < result.length ; i++){
-                System.out.println("▶️ " + result[i]);
+                System.out.println("▶️ " + result[i] + "   " + "👍 " + getVideoLikeCount(result[i]) + "  " + "\uD83D\uDC4E " + getVideoDislikeCount(result[i]));
             }
 
             ps.close();
@@ -416,6 +416,68 @@ public class SQL_Util {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public static int getVideoLikeCount(String title){
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT likeCount FROM video WHERE title=?");
+            ps.setString(1, title);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                int likeCount = rs.getInt("likeCount");
+                ps.close();
+                rs.close();
+                return likeCount;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static int getVideoDislikeCount(String title){
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT dislikeCount FROM video WHERE title=?");
+            ps.setString(1, title);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                int dislikeCount = rs.getInt("dislikeCount");
+                ps.close();
+                rs.close();
+                return dislikeCount;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static void likeVideo(String title){
+        try {
+            int likeCount = getVideoLikeCount(title);
+            PreparedStatement ps = connection.prepareStatement("UPDATE video SET likeCount=?  WHERE title=?");
+            ps.setInt(1, (likeCount + 1));
+            ps.setString(2, title);
+            ps.execute();
+            ps.close();
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void dislikeVideo(String title){
+        try {
+            int dislikeCount = getVideoDislikeCount(title);
+            PreparedStatement ps = connection.prepareStatement("UPDATE video SET dislikeCount=?  WHERE title=?");
+            ps.setInt(1, (dislikeCount + 1));
+            ps.setString(2, title);
+            ps.execute();
+            ps.close();
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
 }

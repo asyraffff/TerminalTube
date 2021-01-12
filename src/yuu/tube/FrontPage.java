@@ -30,6 +30,20 @@ public class FrontPage {
         System.out.print("Please select [S or L] : ");
     }
 
+    public static void choices(){
+        System.out.println("");
+        System.out.println("-----------------------------");
+        System.out.println("[ 1 ] 🔥 Watch Trending");
+        System.out.println("[ 2 ] 🛠 Add New Video");
+        System.out.println("[ 3 ] 🌈 Watch my Video");
+        System.out.println("[ 4 ] 🚀 Search Youtube Channel");
+        System.out.println("[ 5 ] 💁 Edit account");
+        System.out.println("[ 6 ] 🏖 About Yuu-Tube");
+        System.out.println("[ 7 ] 😔 Log Out");
+        System.out.println("");
+        System.out.print("Please choose [1 - 7] : ");
+    }
+
     public static void trending(){
         System.out.println("");
         System.out.println("🔥 Trending on Yuu-Tube");
@@ -84,20 +98,6 @@ public class FrontPage {
         }
     }
 
-    public static void choices(){
-        System.out.println("");
-        System.out.println("-----------------------------");
-        System.out.println("[ 1 ] 🔥 Watch Trending");
-        System.out.println("[ 2 ] 🛠 Add New Video");
-        System.out.println("[ 3 ] 🌈 Watch my Video");
-        System.out.println("[ 4 ] 🚀 Search Youtube Channel");
-        System.out.println("[ 5 ] 💁 Edit account");
-        System.out.println("[ 6 ] 🏖 About Yuu-Tube");
-        System.out.println("[ 7 ] 😔 Log Out");
-        System.out.println("");
-        System.out.print("Please choose [1 - 7] : ");
-    }
-
     public static void addNewVideo(){
         System.out.println("");
         System.out.println("------------------------------");
@@ -129,6 +129,10 @@ public class FrontPage {
         String filePath = SQL_Util.findFileForThatVideo(answer);
         Video.open(filePath, answer);
 
+        System.out.print("Do you like it ? [y / n] : ");
+        String likeOrNot = scanner.next();
+        Video.likeOrNotLikeVideo(likeOrNot, answer);
+
         System.out.print("Do you want to watch more ? y | n : ");
         String yesOrNo = scanner.next();
 
@@ -138,6 +142,10 @@ public class FrontPage {
                 String vidTitle = scanner.next();
                 String filePathName = SQL_Util.findFileForThatVideo(answer);
                 Video.open(filePathName, vidTitle);
+
+                System.out.print("Do you like it ? [y / n] : ");
+                String likeOrNotAnswer = scanner.next();
+                Video.likeOrNotLikeVideo(likeOrNotAnswer, vidTitle);
 
                 System.out.print("Back to Homepage ? y | n : ");
                 String answerToHomeFromWatchAgainVideo = scanner.next();
@@ -224,16 +232,22 @@ public class FrontPage {
         System.out.println("🚀 Search Youtube Channel");
         System.out.println("");
         SQL_Util.displayYoutubeChannelName();
+
         System.out.println("");
         System.out.print("Choose Youtube Channel to open 💡 : ");
         String answer = scanner.next();
         System.out.println("");
         SQL_Util.displayVideoListFromYoutubeChannel(answer);
+
         System.out.println("");
         System.out.print("Choose video to open : ");
         String chooseVid = scanner.next();
         String filePath = SQL_Util.findFileForThatVideo(chooseVid);
         Video.open(filePath, chooseVid);
+
+        System.out.print("Do you like it ? [y / n] : ");
+        String likeOrNot = scanner.next();
+        Video.likeOrNotLikeVideo(likeOrNot, chooseVid);
 
         System.out.print("Back to Homepage ? y | n : ");
         String answerToHomeFromSearch = scanner.next();

@@ -35,4 +35,18 @@ public class Video {
         SQL_Util.deleteVideo1(vid);
         SQL_Util.deleteVideo2(vid);
     }
+
+    public static void likeOrNotLikeVideo(String answer, String videoTitle){
+        switch (answer.toLowerCase()){
+            case "y":
+                SQL_Util.likeVideo(videoTitle);
+                break;
+            case "n":
+                SQL_Util.dislikeVideo(videoTitle);
+                break;
+            default:
+                System.out.println("[y or n] only 😊");
+                FrontPage.openVideo();
+        }
+    }
 }
