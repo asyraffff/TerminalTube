@@ -95,7 +95,7 @@ public class FrontPage {
         System.out.println("[ 6 ] 🏖 About Yuu-Tube");
         System.out.println("[ 7 ] 😔 Log Out");
         System.out.println("");
-        System.out.print("Please choose [1 - 6] : ");
+        System.out.print("Please choose [1 - 7] : ");
     }
 
     public static void addNewVideo(){
