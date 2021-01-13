@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Console {
     private static Scanner scanner = new Scanner(System.in);
 
+    // sign Up or Log in method
     public static void signupOrLogin(String answer){
         switch (answer.toLowerCase()){
             case "s":
@@ -16,11 +17,11 @@ public class Console {
                 System.out.print("Password : ");
                 String passSignUp = scanner.next();
 
-                User.signUp(username, emailSignUp, passSignUp);
+                User.signUp(username, emailSignUp, passSignUp); //Sign Up
 
                 System.out.println("\n  🥳 Welcome to the Yuu-Tube " + username + " 🥳");
                 System.out.println("");
-                FrontPage.choices();
+                FrontPage.choices(); // Choices Page
                 break;
 
             case "l":
@@ -30,9 +31,9 @@ public class Console {
                 System.out.print("Password : ");
                 String passLogIn = scanner.next();
 
-                User.logIn(emailLogIn, passLogIn);
+                User.logIn(emailLogIn, passLogIn); // Log In
 
-                FrontPage.choices();
+                FrontPage.choices(); // Choices Page
                 break;
             default:
                 System.out.print("\n🚨 S or L word only 🚨 : ");
@@ -41,6 +42,7 @@ public class Console {
         }
     }
 
+    // choose what page to open
     public static void choose(int answer){
         switch (answer) {
             case 1:
@@ -70,11 +72,46 @@ public class Console {
         }
     }
 
-    public static void backToHomePage(String answer){
-        if (answer.equals("y")){
-            FrontPage.choices();
+    // Back to Homepage method
+    public static void backToHomePage(){
+        System.out.print("Back to Homepage ? y | n : ");
+        String answerBackToHomepage = scanner.next();
+
+        if (answerBackToHomepage.equals("y")){
+            FrontPage.choices(); // choices page
             int userChoose = scanner.nextInt();
-            choose(userChoose);
+            choose(userChoose); // user choose what page to open
         }
+    }
+
+    public static void videoLikeOrDislike(String videoTitle){
+        System.out.print("Do you like it ? [y / n] : ");
+        String likeOrNot = scanner.next();
+        Video.likeOrNotLikeVideo(likeOrNot, videoTitle);
+    }
+
+    public static void deleteVideo(){
+        System.out.print("Do you want to delete video ? [y / n] : ");
+        String answerForDeleteVideo = scanner.next();
+
+        switch (answerForDeleteVideo.toLowerCase()){
+            case "y":
+                System.out.print("Choose video to delete : ");
+                String videoName = scanner.next();
+                Video.delete(videoName); // delete video from give video title name
+                break;
+            case "n":
+                // Back to homepage
+                backToHomePage();
+                break;
+            default:
+                System.out.println("y or n only 😊");
+        }
+    }
+
+    public static void chooseVideoToOpen(String chooseVid){
+
+        String filePath = SQL_Util.findFileForThatVideo(chooseVid);// find fileName from that videoTitle
+        Video.open(filePath, chooseVid);// open the video with fileName and videoTitle argument
     }
 }

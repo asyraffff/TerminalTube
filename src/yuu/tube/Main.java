@@ -1,7 +1,6 @@
 package yuu.tube;
 
 import java.util.Scanner;
-import java.sql.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,12 +9,12 @@ public class Main {
         FrontPage.hi();
 
         // SignUp or Login function
-        Scanner sc = new Scanner(System.in);
-        String answer = sc.next();
+        Scanner sc = new Scanner(System.in); // scan for user answer
+        String answer = sc.next(); // s or l
         Console.signupOrLogin(answer);
 
         // Choices page
-        int userChoose = sc.nextInt();
+        int userChoose = sc.nextInt(); // get the user choose page input
         Console.choose(userChoose);
 
     }

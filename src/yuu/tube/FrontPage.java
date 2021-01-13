@@ -13,6 +13,7 @@ public class FrontPage {
     private static String trend4 = "Cat_Vibing_To_Ievan_Polkka_(Official_Video_HD)_Cat_Vibing_To_Music_Cat_Vibing_Meme";
     private static String trend5 = "Starship_SN8_High_Altitude_Flight_Recap";
 
+    // Main FrontPage
     public static void hi(){
         System.out.println("");
         System.out.println("🔥🔥 Welcome to Yuu-Tube v1.0  🔥🔥\n");
@@ -30,6 +31,7 @@ public class FrontPage {
         System.out.print("Please select [S or L] : ");
     }
 
+    // Choices Page
     public static void choices(){
         System.out.println("");
         System.out.println("-----------------------------");
@@ -44,6 +46,7 @@ public class FrontPage {
         System.out.print("Please choose [1 - 7] : ");
     }
 
+    // Trending Page
     public static void trending(){
         System.out.println("");
         System.out.println("🔥 Trending on Yuu-Tube");
@@ -56,7 +59,7 @@ public class FrontPage {
         System.out.print("Please choose [1 - 5] : ");
 
         int chooseVideo = scanner.nextInt();
-        chooseTrendingVideo(chooseVideo);
+        chooseTrendingVideo(chooseVideo); // method to open the trending video
 
         System.out.print("Do you want to watch more ? y | n : ");
         String answer = scanner.next();
@@ -64,22 +67,23 @@ public class FrontPage {
         switch (answer.toLowerCase()){
             case "y":
                 System.out.print("Please choose [1 - 5] : ");
-                chooseTrendingVideo(scanner.nextInt());
+                chooseTrendingVideo(scanner.nextInt()); // open trending video again
                 break;
             case "n":
-                System.out.print("Back to Homepage ? y | n : ");
-                String answerToHomeFromTrendVid = scanner.next();
-                Console.backToHomePage(answerToHomeFromTrendVid);
+                // Back to Homepage
+                Console.backToHomePage();
                 break;
             default:
                 System.out.println("y | n only 😊");
+                trending(); // back to trending page
         }
     }
 
+    // choose trending video to open
     public static void chooseTrendingVideo(int numberVideo){
         switch (numberVideo){
             case 1:
-                Video.open(trendVid, trend1);
+                Video.open(trendVid, trend1); // fileMame, videoName
                 break;
             case 2:
                 Video.open(trendVid, trend2);
@@ -98,6 +102,7 @@ public class FrontPage {
         }
     }
 
+    // add new video for registered user
     public static void addNewVideo(){
         System.out.println("");
         System.out.println("------------------------------");
@@ -110,28 +115,32 @@ public class FrontPage {
         String fileName = scanner.next();
         System.out.print("Title : ");
         String titleVideo = scanner.next();
+        // method to add user video to the database
         Video.addVideo(username, youtubeChannelName, fileName, titleVideo);
 
-        System.out.print("Back to Homepage ? y | n : ");
-        String answerToHomeFromWatchAddVideo = scanner.next();
-        Console.backToHomePage(answerToHomeFromWatchAddVideo);
+        // Back to Homepage
+        Console.backToHomePage();
     }
 
+    // Open Video method from choices Page
     public static void openVideo(){
         System.out.println("");
         System.out.println("------------------------------");
         System.out.println("🌈 Watch my Video");
         System.out.print("Username : ");
         String username = scanner.next();
-        Video.findVideo(username);
+
+        Video.findVideo(username); // find video from that username in database
+
+        // when the video are list out
+        // user need to choose the video from that list to open it
         System.out.print("Choose video to open : ");
         String answer = scanner.next();
-        String filePath = SQL_Util.findFileForThatVideo(answer);
-        Video.open(filePath, answer);
 
-        System.out.print("Do you like it ? [y / n] : ");
-        String likeOrNot = scanner.next();
-        Video.likeOrNotLikeVideo(likeOrNot, answer);
+        Console.chooseVideoToOpen(answer); // open chosen video
+
+        // like or dislike video
+        Console.videoLikeOrDislike(answer); // pass videoTitle name
 
         System.out.print("Do you want to watch more ? y | n : ");
         String yesOrNo = scanner.next();
@@ -143,124 +152,83 @@ public class FrontPage {
                 String filePathName = SQL_Util.findFileForThatVideo(answer);
                 Video.open(filePathName, vidTitle);
 
-                System.out.print("Do you like it ? [y / n] : ");
-                String likeOrNotAnswer = scanner.next();
-                Video.likeOrNotLikeVideo(likeOrNotAnswer, vidTitle);
-
-                System.out.print("Back to Homepage ? y | n : ");
-                String answerToHomeFromWatchAgainVideo = scanner.next();
-                Console.backToHomePage(answerToHomeFromWatchAgainVideo);
+                // like or dislike video
+                Console.videoLikeOrDislike(vidTitle);
+                // back to homepage
+                Console.backToHomePage();
                 break;
             case "n":
-                System.out.print("Back to Homepage ? y | n : ");
-                String answerToHomeFromOpenVideo = scanner.next();
-                Console.backToHomePage(answerToHomeFromOpenVideo);
+                // Back to Homepage
+                Console.backToHomePage();
                 break;
             default:
                 System.out.println("y | n only 😊");
         }
     }
 
+    // edit User Account
     public static void editAccount(){
         System.out.println("");
         System.out.println("------------------------------");
         System.out.println("💁 Edit account");
         System.out.print("Username : ");
         String username = scanner.next();
-        SQL_Util.userDetails(username);
+        SQL_Util.userDetails(username); // find user details in database
+
         System.out.print("What do you want to edit ? : ");
         String answer = scanner.next();
-        switch (answer.toLowerCase()){
-            case "username":
-                System.out.println("");
-                System.out.print("New Username : ");
-                String newUsername = scanner.next();
-                SQL_Util.editUsername(username, newUsername);
-                break;
-            case "email":
-                System.out.println("");
-                System.out.print("New Email : ");
-                String newEmail = scanner.next();
-                String oldEmail = SQL_Util.getEmail(username);
-                SQL_Util.editEmail(oldEmail, newEmail);
-                break;
-            case "password":
-                System.out.println("");
-                System.out.print("New Password : ");
-                String newPass = scanner.next();
-                String oldPass = SQL_Util.getPassword(username);
-                SQL_Util.editPassword(oldPass, newPass);
-                break;
-            case "video":
-                System.out.println("");
-                System.out.print("Username : ");
-                String name = scanner.next();
-                int userId = SQL_Util.getUid(name);
-                SQL_Util.returnUserVideo(userId);
-                System.out.println("");
-                System.out.print("Do you want to delete video ? [y / n] : ");
-                String answerForDeleteVideo = scanner.next();
-                switch (answerForDeleteVideo.toLowerCase()){
-                    case "y":
-                        System.out.print("Choose video to delete : ");
-                        String videoName = scanner.next();
-                        Video.delete(videoName);
-                        break;
-                    case "n":
-                        System.out.print("Back to Homepage ? y | n : ");
-                        String answerToHome = scanner.next();
-                        Console.backToHomePage(answerToHome);
-                        break;
-                    default:
-                        System.out.println("y or n only 😊");
-                }
-                break;
-            default:
-                System.out.println("Choose [username / email / password] only 😊");
-        }
+
+        // Edit user method
+        User.editAcc(username);
+
+        // return new user details
         SQL_Util.userDetails(username);
 
         System.out.println("");
-        System.out.print("Back to Homepage ? y | n : ");
-        String answerToHomeFromEditAcc = scanner.next();
-        Console.backToHomePage(answerToHomeFromEditAcc);
+        Console.backToHomePage(); // back to homepage
     }
 
+    // Search page
     public static void search(){
         System.out.println("");
         System.out.println("------------------------------");
         System.out.println("🚀 Search Youtube Channel");
         System.out.println("");
-        SQL_Util.displayYoutubeChannelName();
+
+        SQL_Util.displayYoutubeChannelName(); // display all Youtube Channel name
 
         System.out.println("");
         System.out.print("Choose Youtube Channel to open 💡 : ");
         String answer = scanner.next();
         System.out.println("");
+
         SQL_Util.displayVideoListFromYoutubeChannel(answer);
+        // display all the video from that Youtube Channel
 
         System.out.println("");
         System.out.print("Choose video to open : ");
         String chooseVid = scanner.next();
-        String filePath = SQL_Util.findFileForThatVideo(chooseVid);
-        Video.open(filePath, chooseVid);
 
-        System.out.print("Do you like it ? [y / n] : ");
-        String likeOrNot = scanner.next();
-        Video.likeOrNotLikeVideo(likeOrNot, chooseVid);
+        Console.chooseVideoToOpen(chooseVid);
+        // choose video to open
 
-        System.out.print("Back to Homepage ? y | n : ");
-        String answerToHomeFromSearch = scanner.next();
-        Console.backToHomePage(answerToHomeFromSearch);
+        Console.videoLikeOrDislike(chooseVid);
+        // like or dislike video
+
+        Console.backToHomePage(); // back to homepage
     }
 
+    // About Page
     public static void aboutPage() {
         System.out.println("");
         System.out.println("------------------------------");
         System.out.println("🏖 About Yuu-Tube");
         System.out.println("");
         System.out.println("Youtube was created at 31 December 2020 👴");
+
         SQL_Util.aboutVideoAndUserDatabase();
+        // details of video and user database
+
         System.out.println("");
         System.out.println("OUR TEAM 🏁");
         System.out.println("1️⃣ Asyraf   🧑‍💻");
@@ -269,8 +237,8 @@ public class FrontPage {
         System.out.println("4️⃣ Keisava  👨🏻‍💻");
         System.out.println("5️⃣ Arina    👩‍💻");
         System.out.println("");
-        System.out.print("Back to Homepage ? y | n : ");
-        String answerToHomeFromAbout = scanner.next();
-        Console.backToHomePage(answerToHomeFromAbout);
+
+        Console.backToHomePage();
+        // back to homepage
     }
 }

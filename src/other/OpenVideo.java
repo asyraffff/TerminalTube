@@ -1,4 +1,4 @@
-package yuu.tube;
+package other;
 
 import java.awt.*;
 import java.io.File;

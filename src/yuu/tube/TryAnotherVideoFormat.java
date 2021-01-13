@@ -10,8 +10,6 @@ public class TryAnotherVideoFormat {
             File file = new File(path);
             Desktop desktop = Desktop.getDesktop();
             desktop.open(file);
-//            URI oURL = new URI("https://www.youtube.com/");
-//            desktop.browse(oURL);
         } catch (Exception e){
             e.printStackTrace();
         }

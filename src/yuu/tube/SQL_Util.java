@@ -7,6 +7,7 @@ public class SQL_Util {
     public static final String credentials = "jdbc:mysql://localhost:3306/YoutubeDB?user=root&password=tropika17&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC";
     static Connection connection = null;
 
+    // initiate the connection with the database
     public static void initConnection() {
         if (connection != null){
             System.out.println("[WARN] Connection has already been established.");
@@ -15,7 +16,6 @@ public class SQL_Util {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(credentials);
-//            System.out.println("Yey, connected to YoutubeDB");
         } catch (ClassNotFoundException | SQLException e){
             e.printStackTrace();
         }
@@ -97,38 +97,39 @@ public class SQL_Util {
 
     public static void isSignedUp(String email, String password){
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT uid FROM user WHERE email=? AND password=?");
+            PreparedStatement ps = connection.prepareStatement("SELECT email, password FROM user WHERE email=? AND password=?");
             ps.setString(1,email);
             ps.setString(2,password);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                int isExist = rs.getInt("uid");
-                String stringIsExist = Integer.toString(isExist);
-//                System.out.println(stringIsExist);
-                if (!stringIsExist.equals("null")) {
+                String pass = rs.getString("password");
+                String emailUser = rs.getString("email");
+                // check
+                ps.close();
+                rs.close();
+                if (pass.equals(password) && emailUser.equals(email)) {
                     System.out.println("Welcome back 👋");
                 } else {
                     System.out.println("you need to Sign Up first 😊");
                 }
-                ps.close();
-                rs.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    // display vid from a specific uid
     public static int returnUserVideo(int userId){
        try {
            PreparedStatement ps = connection.prepareStatement("SELECT * FROM VideoUser Where uid=?");
            ps.setInt(1, userId);
            ResultSet rs = ps.executeQuery();
-           ArrayList<Integer> list= new ArrayList<Integer>();
+           ArrayList<Integer> list= new ArrayList<Integer>(); // array to store all the user's vid(video that reference to that user_
            while (rs.next()){
-               list.add(rs.getInt("vid"));
+               list.add(rs.getInt("vid")); // add all the vid to list array
            }
-           Integer[] result = new Integer[list.size()];
-           result = list.toArray(result);
+           Integer[] result = new Integer[list.size()]; // new array with size of list array
+           result = list.toArray(result); // add list array to new array
 
            for(int i = 0; i < result.length ; i++){
                displayVideoList(result[i]);
@@ -141,21 +142,22 @@ public class SQL_Util {
        return -1;
     }
 
+    // display video from specific vid
     public static void displayVideoList(int vidId){
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT vid, title FROM video WHERE vid=?");
             ps.setInt(1, vidId);
             ResultSet rs = ps.executeQuery();
-            ArrayList<String> list = new ArrayList<String>();
+            ArrayList<String> list = new ArrayList<String>(); // array to store videoTitle
             while (rs.next()){
-                list.add(rs.getString("title"));
+                list.add(rs.getString("title")); // add all the videoTitle with that vid to list array
             }
-            String[] result = new String[list.size()];
-            result = list.toArray(result);
+            String[] result = new String[list.size()]; // new array that have same size with list array
+            result = list.toArray(result); // add list array to new array
 
             for(int i = 0; i < result.length ; i++){
-                System.out.println("👉 " + result[i]);
-            }
+                System.out.println("👉 " + result[i] + "   " + "👍 " + getVideoLikeCount(result[i]) + "  " + "\uD83D\uDC4E " + getVideoDislikeCount(result[i]));
+            } // return the video list of that user with its statistics
 
             ps.close();
             rs.close();
@@ -164,6 +166,7 @@ public class SQL_Util {
         }
     }
 
+    // find file for that specific video title
     public static String findFileForThatVideo(String videoTitle){
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM video WHERE title=?");
@@ -181,6 +184,7 @@ public class SQL_Util {
         return "";
     }
 
+    // find user details in database
     public static void userDetails(String username){
         try {
             PreparedStatement ps = connection.prepareStatement("select * from user where username=?");
@@ -196,7 +200,7 @@ public class SQL_Util {
                 System.out.println("Username : " + name);
                 System.out.println("Email : " + email);
                 System.out.println("Password : " + password);
-                userVideosCount(userId);
+                userVideosCount(userId); // display total user's video
                 ps.close();
                 rs.close();
             }
@@ -370,9 +374,28 @@ public class SQL_Util {
                 System.out.println("Total Video : " + totalVideo);
                 totalChannel();
                 totalUser();
+                getTotalLikeAndDislikeCount();
 
                 ps.close();
                 rs.close();
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void getTotalLikeAndDislikeCount(){
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT SUM(dislikeCount) as dislikeCount, SUM(likeCount) as likeCount FROM video;");
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                int likeCount = rs.getInt("likeCount");
+                int dislikeCount = rs.getInt("dislikeCount");
+
+                ps.close();
+                rs.close();
+                System.out.println("Total like 👍 : " + likeCount);
+                System.out.println("Total dislike 👎 : " + dislikeCount);
             }
         } catch (SQLException e){
             e.printStackTrace();
