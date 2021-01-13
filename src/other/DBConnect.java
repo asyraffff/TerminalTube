@@ -2,12 +2,13 @@ package other;
 
 import java.sql.*;
 
+// Example of How to Connect Project with MySQL Workbench Database
 public class DBConnect {
     public static void main(String[] args) {
         try {
             String host = "jdbc:mysql://localhost:3306/user";
             String uName = "root";
-            String uPass = "tropika17";
+            String uPass = "password";
             Connection con = DriverManager.getConnection(host, uName, uPass);
 
             Statement stat = con.createStatement();
