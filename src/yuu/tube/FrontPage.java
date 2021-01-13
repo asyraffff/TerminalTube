@@ -39,11 +39,12 @@ public class FrontPage {
         System.out.println("[ 2 ] 🛠 Add New Video");
         System.out.println("[ 3 ] 🌈 Watch my Video");
         System.out.println("[ 4 ] 🚀 Search Youtube Channel");
-        System.out.println("[ 5 ] 💁 Edit account");
-        System.out.println("[ 6 ] 🏖 About Yuu-Tube");
-        System.out.println("[ 7 ] 😔 Log Out");
+        System.out.println("[ 5 ] 📦 Open another video format");
+        System.out.println("[ 6 ] 💁 Edit account");
+        System.out.println("[ 7 ] 🏖 About Yuu-Tube");
+        System.out.println("[ 8 ] 😔 Log Out");
         System.out.println("");
-        System.out.print("Please choose [1 - 7] : ");
+        System.out.print("Please choose [1 - 8] : ");
     }
 
     // Trending Page
@@ -68,10 +69,11 @@ public class FrontPage {
             case "y":
                 System.out.print("Please choose [1 - 5] : ");
                 chooseTrendingVideo(scanner.nextInt()); // open trending video again
+                Console.backToHomePage("FrontPage.trending()");
                 break;
             case "n":
                 // Back to Homepage
-                Console.backToHomePage();
+                Console.backToHomePage("FrontPage.trending()");
                 break;
             default:
                 System.out.println("y | n only 😊");
@@ -119,7 +121,7 @@ public class FrontPage {
         Video.addVideo(username, youtubeChannelName, fileName, titleVideo);
 
         // Back to Homepage
-        Console.backToHomePage();
+        Console.backToHomePage("FrontPage.addNewVideo()");
     }
 
     // Open Video method from choices Page
@@ -155,11 +157,11 @@ public class FrontPage {
                 // like or dislike video
                 Console.videoLikeOrDislike(vidTitle);
                 // back to homepage
-                Console.backToHomePage();
+                Console.backToHomePage("FrontPage.openVideo()");
                 break;
             case "n":
                 // Back to Homepage
-                Console.backToHomePage();
+                Console.backToHomePage("FrontPage.openVideo()");
                 break;
             default:
                 System.out.println("y | n only 😊");
@@ -185,7 +187,7 @@ public class FrontPage {
         SQL_Util.userDetails(username);
 
         System.out.println("");
-        Console.backToHomePage(); // back to homepage
+        Console.backToHomePage("FrontPage.editAccount()"); // back to homepage
     }
 
     // Search page
@@ -215,7 +217,7 @@ public class FrontPage {
         Console.videoLikeOrDislike(chooseVid);
         // like or dislike video
 
-        Console.backToHomePage(); // back to homepage
+        Console.backToHomePage("FrontPage.search()"); // back to homepage
     }
 
     // About Page
@@ -238,7 +240,19 @@ public class FrontPage {
         System.out.println("5️⃣ Arina    👩‍💻");
         System.out.println("");
 
-        Console.backToHomePage();
+        Console.backToHomePage("FrontPage.aboutPage()");
         // back to homepage
+    }
+
+    // another video format
+    public static void anotherVideoFormat(){
+        System.out.println("");
+        System.out.println("------------------------------");
+        System.out.println("📦 Open another video format");
+        System.out.println("");
+
+        Console.anotherFormat();
+
+        Console.backToHomePage("FrontPage.anotherVideoFormat()");
     }
 }

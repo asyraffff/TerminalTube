@@ -1,5 +1,6 @@
 package yuu.tube;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Console {
@@ -58,12 +59,15 @@ public class Console {
                 FrontPage.search();
                 break;
             case 5:
-                FrontPage.editAccount();
+                FrontPage.anotherVideoFormat();
                 break;
             case 6:
-                FrontPage.aboutPage();
+                FrontPage.editAccount();
                 break;
             case 7:
+                FrontPage.aboutPage();
+                break;
+            case 8:
                 System.out.println("");
                 System.out.println("Bye Bye 👋");
                 break;
@@ -73,7 +77,7 @@ public class Console {
     }
 
     // Back to Homepage method
-    public static void backToHomePage(){
+    public static String backToHomePage(String command){
         System.out.print("Back to Homepage ? y | n : ");
         String answerBackToHomepage = scanner.next();
 
@@ -81,7 +85,10 @@ public class Console {
             FrontPage.choices(); // choices page
             int userChoose = scanner.nextInt();
             choose(userChoose); // user choose what page to open
+        } else {
+            return command;
         }
+        return command;
     }
 
     public static void videoLikeOrDislike(String videoTitle){
@@ -102,7 +109,7 @@ public class Console {
                 break;
             case "n":
                 // Back to homepage
-                backToHomePage();
+                backToHomePage("deleteVideo()");
                 break;
             default:
                 System.out.println("y or n only 😊");
@@ -110,8 +117,29 @@ public class Console {
     }
 
     public static void chooseVideoToOpen(String chooseVid){
-
         String filePath = SQL_Util.findFileForThatVideo(chooseVid);// find fileName from that videoTitle
         Video.open(filePath, chooseVid);// open the video with fileName and videoTitle argument
+    }
+
+    // open another video format
+    public static void anotherFormat(){
+        System.out.println("AVI | FLV | WMV");
+        System.out.print("Choose which video format you want to open : ");
+
+        String format = scanner.next();
+
+        switch (format.toLowerCase()){
+            case "avi":
+                TryAnotherVideoFormat.avi();
+                break;
+            case "flv":
+                TryAnotherVideoFormat.flv();
+                break;
+            case "wmv":
+                TryAnotherVideoFormat.wmv();
+                break;
+            default:
+                System.out.println("AVI | FLV | WMV only 😊");
+        }
     }
 }
