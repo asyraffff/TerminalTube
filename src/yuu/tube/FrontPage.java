@@ -16,9 +16,9 @@ public class FrontPage {
     // Main FrontPage
     public static void hi(){
         System.out.println("");
-        System.out.println("🔥🔥 Welcome to Yuu-Tube v1.0  🔥🔥\n");
+        System.out.println("🔥🔥 Welcome to Terminal-Tube v1.0  🔥🔥\n");
 
-        System.out.println("Trending on Yuu-Tube");
+        System.out.println("Trending on TerminalTube");
         System.out.println("1️⃣ Pink Sweat$ At My Worst (Official Video)");
         System.out.println("2️⃣ Do you love me (Boston Dynamics)");
         System.out.println("3️⃣ Can't Get You out of My Head (Cover) AnnenMayKantereit x Parcels");
@@ -123,6 +123,7 @@ public class FrontPage {
         String username = scanner.next();
         System.out.print("Youtube Channel Name : ");
         String youtubeChannelName = scanner.next();
+
         System.out.print("File name : ");
         String fileName = scanner.next();
         System.out.print("Title : ");
@@ -264,7 +265,7 @@ public class FrontPage {
     public static void aboutPage() {
         System.out.println("");
         System.out.println("------------------------------");
-        System.out.println("🏖 About Yuu-Tube");
+        System.out.println("🏖 About TerminalTube");
         System.out.println("");
         System.out.println("Youtube was created at 31 December 2020 👴");
 

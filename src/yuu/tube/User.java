@@ -58,6 +58,7 @@ public class User {
                 break;
             default:
                 System.out.println("Choose [username / email / password] only 😊");
+                editAcc(oldUsername);
         }
     }
 }
