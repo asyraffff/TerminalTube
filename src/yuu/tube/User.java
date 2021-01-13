@@ -5,10 +5,10 @@ import java.util.Scanner;
 public class User {
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void signUp(String username, String email, String password){
+    public static void signUp(String username, String email, String password, String twoFACode){
         // initiate the connection with the database
         SQL_Util.initConnection();
-        SQL_Util.addUser(username, email, password);
+        SQL_Util.addUser(username, email, password, twoFACode);
     }
 
     public static void logIn(String email, String password){
@@ -47,7 +47,7 @@ public class User {
                 break;
             case "video":
                 System.out.println("");
-                System.out.print("Video : ");
+                System.out.println("Video : ");
 
                 int userId = SQL_Util.getUid(oldUsername); // get the user id from that username
                 SQL_Util.returnUserVideo(userId); // return user video from that user id

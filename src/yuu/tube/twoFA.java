@@ -3,25 +3,32 @@ package yuu.tube;
 import java.util.Random;
 
 public class twoFA {
-    public static void main(String[] args) {
+    // generate 2fa code
+    public static String generateCode() {
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
 
-//        int leftLimit = 97; // letter 'a'
-//        int rightLimit = 122; // letter 'z'
-//        int targetStringLength = 10;
-//        Random random = new Random();
-//        StringBuilder buffer = new StringBuilder(targetStringLength);
-//        for (int i = 0; i < targetStringLength; i++) {
-//            int randomLimitedInt = leftLimit + (int)
-//                    (random.nextFloat() * (rightLimit - leftLimit + 1));
-//            buffer.append((char) randomLimitedInt);
-//        }
-//        String generatedString = buffer.toString();
-//
-//        System.out.println(generatedString);
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
 
-        int uid = Integer.parseInt(null);
-        String isExist = Integer.toString(uid);
-        System.out.println(isExist);
+        return generatedString;
+    }
 
+    public static void compare(String email,String password, String userTwoFACode){
+        SQL_Util.initConnection();
+        String fromDatabase = SQL_Util.getTwoFACodeFromUser(email);
+
+        if(userTwoFACode.equals(fromDatabase)){
+            User.logIn(email, password); // Log In
+
+            FrontPage.choices(); // Choices Page
+        } else {
+            Console.logIn();
+        }
     }
 }

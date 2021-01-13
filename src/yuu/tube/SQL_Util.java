@@ -10,7 +10,7 @@ public class SQL_Util {
     // initiate the connection with the database
     public static void initConnection() {
         if (connection != null){
-            System.out.println("[WARN] Connection has already been established.");
+//            System.out.println("[WARN] Connection has already been established.");
             return;
         }
         try {
@@ -21,12 +21,13 @@ public class SQL_Util {
         }
     }
 
-    public static void addUser(String username, String email, String password){
+    public static void addUser(String username, String email, String password, String twoFACode){
         try {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO user(username, email, password) VALUES(?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO user(username, email, password, twoFACode) VALUES(?,?,?,?)");
             ps.setString(1, username);
             ps.setString(2, email);
             ps.setString(3,password);
+            ps.setString(4, twoFACode);
             ps.execute();
             ps.close();
         } catch (SQLException e){
@@ -501,6 +502,23 @@ public class SQL_Util {
         } catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public static String getTwoFACodeFromUser(String email){
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT twoFACode FROM user where email=?;");
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                String twoFACode = rs.getString("twoFACode");
+                ps.close();
+                rs.close();
+                return twoFACode;
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return "";
     }
 
 }

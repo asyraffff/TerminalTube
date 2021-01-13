@@ -69,11 +69,20 @@ public class FrontPage {
             case "y":
                 System.out.print("Please choose [1 - 5] : ");
                 chooseTrendingVideo(scanner.nextInt()); // open trending video again
-                Console.backToHomePage("FrontPage.trending()");
+
+                System.out.print("Back to Homepage ? y | n : ");
+                String answerToHomepageFromTrending = scanner.next();
+                if (answerToHomepageFromTrending.equals("y")){
+                    Console.backToHomePage();
+                } else if(answerToHomepageFromTrending.equals("n")) {
+                    // if n
+                    // return to that page back
+                    trending();
+                }
                 break;
             case "n":
                 // Back to Homepage
-                Console.backToHomePage("FrontPage.trending()");
+                Console.backToHomePage();
                 break;
             default:
                 System.out.println("y | n only 😊");
@@ -101,6 +110,7 @@ public class FrontPage {
                 break;
             default:
                 System.out.println("Choose [1 - 5] only 😊");
+                trending();
         }
     }
 
@@ -121,7 +131,15 @@ public class FrontPage {
         Video.addVideo(username, youtubeChannelName, fileName, titleVideo);
 
         // Back to Homepage
-        Console.backToHomePage("FrontPage.addNewVideo()");
+        System.out.print("Back to Homepage ? y | n : ");
+        String answerToHomepageFromAddNewVideo = scanner.next();
+        if (answerToHomepageFromAddNewVideo.equals("y")){
+            Console.backToHomePage();
+        } else if(answerToHomepageFromAddNewVideo.equals("n")) {
+            // if n
+            // return to that page back
+            addNewVideo();
+        }
     }
 
     // Open Video method from choices Page
@@ -157,14 +175,23 @@ public class FrontPage {
                 // like or dislike video
                 Console.videoLikeOrDislike(vidTitle);
                 // back to homepage
-                Console.backToHomePage("FrontPage.openVideo()");
+                System.out.print("Back to Homepage ? y | n : ");
+                String answerToHomepageFromOpenVideo = scanner.next();
+                if (answerToHomepageFromOpenVideo.equals("y")){
+                    Console.backToHomePage();
+                } else if(answerToHomepageFromOpenVideo.equals("n")) {
+                    // if n
+                    // return to that page back
+                    openVideo();
+                }
                 break;
             case "n":
                 // Back to Homepage
-                Console.backToHomePage("FrontPage.openVideo()");
+                Console.backToHomePage();
                 break;
             default:
                 System.out.println("y | n only 😊");
+                openVideo();
         }
     }
 
@@ -177,9 +204,6 @@ public class FrontPage {
         String username = scanner.next();
         SQL_Util.userDetails(username); // find user details in database
 
-        System.out.print("What do you want to edit ? : ");
-        String answer = scanner.next();
-
         // Edit user method
         User.editAcc(username);
 
@@ -187,7 +211,15 @@ public class FrontPage {
         SQL_Util.userDetails(username);
 
         System.out.println("");
-        Console.backToHomePage("FrontPage.editAccount()"); // back to homepage
+        System.out.print("Back to Homepage ? y | n : ");
+        String answerToHomepageFromEditAcc = scanner.next();
+        if (answerToHomepageFromEditAcc.equals("y")){
+            Console.backToHomePage();
+        } else if(answerToHomepageFromEditAcc.equals("n")) {
+            // if n
+            // return to that page back
+            editAccount();
+        }
     }
 
     // Search page
@@ -217,7 +249,15 @@ public class FrontPage {
         Console.videoLikeOrDislike(chooseVid);
         // like or dislike video
 
-        Console.backToHomePage("FrontPage.search()"); // back to homepage
+        System.out.print("Back to Homepage ? y | n : ");
+        String answerToHomepageFromTrending = scanner.next();
+        if (answerToHomepageFromTrending.equals("y")){
+            Console.backToHomePage();
+        } else if(answerToHomepageFromTrending.equals("n")) {
+            // if n
+            // return to that page back
+            search();
+        }
     }
 
     // About Page
@@ -240,8 +280,15 @@ public class FrontPage {
         System.out.println("5️⃣ Arina    👩‍💻");
         System.out.println("");
 
-        Console.backToHomePage("FrontPage.aboutPage()");
-        // back to homepage
+        System.out.print("Back to Homepage ? y | n : ");
+        String answerToHomepageFromAbout = scanner.next();
+        if (answerToHomepageFromAbout.equals("y")){
+            Console.backToHomePage();
+        } else if(answerToHomepageFromAbout.equals("n")) {
+            // if n
+            // return to that page back
+            aboutPage();
+        }
     }
 
     // another video format
@@ -253,6 +300,25 @@ public class FrontPage {
 
         Console.anotherFormat();
 
-        Console.backToHomePage("FrontPage.anotherVideoFormat()");
+        System.out.print("Back to Homepage ? y | n : ");
+        String answerToHomepageFromAnotherVidFormat = scanner.next();
+        if (answerToHomepageFromAnotherVidFormat.equals("y")){
+            Console.backToHomePage();
+        } else if(answerToHomepageFromAnotherVidFormat.equals("n")) {
+            // if n
+            // return to that page back
+            Console.anotherFormat();
+
+            System.out.print("Back to Homepage ? y | n : ");
+            String answerToHomepageFromAnotherVidFormat2 = scanner.next();
+            if (answerToHomepageFromAnotherVidFormat2.equals("y")){
+                Console.backToHomePage();
+            } else if(answerToHomepageFromAnotherVidFormat2.equals("n")) {
+                // if n
+                // return to that page back
+                Console.anotherFormat();
+                Console.backToHomePage();
+            }
+        }
     }
 }

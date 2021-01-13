@@ -1,6 +1,5 @@
 package yuu.tube;
 
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Console {
@@ -18,29 +17,42 @@ public class Console {
                 System.out.print("Password : ");
                 String passSignUp = scanner.next();
 
-                User.signUp(username, emailSignUp, passSignUp); //Sign Up
+                // generate unique 2fa code
+                String twoFACode = twoFA.generateCode();
+                sendHTMLEmail.send(emailSignUp, twoFACode); // send to user email
+                System.out.println("");
+                System.out.println("We already sent your 2FA code to your email");
+                System.out.println("Please check your email 😊");
+
+                User.signUp(username, emailSignUp, passSignUp, twoFACode); //Sign Up
 
                 System.out.println("\n  🥳 Welcome to the Yuu-Tube " + username + " 🥳");
                 System.out.println("");
-                FrontPage.choices(); // Choices Page
+
+                System.out.println("Please log in 💡\n");
+                logIn();
                 break;
 
             case "l":
                 System.out.println("\nGreat 🚀");
-                System.out.print("Email : ");
-                String emailLogIn = scanner.next();
-                System.out.print("Password : ");
-                String passLogIn = scanner.next();
-
-                User.logIn(emailLogIn, passLogIn); // Log In
-
-                FrontPage.choices(); // Choices Page
+                logIn();
                 break;
             default:
                 System.out.print("\n🚨 S or L word only 🚨 : ");
                 String answerAgain = scanner.next();
                 signupOrLogin(answerAgain);
         }
+    }
+
+    public static void logIn(){
+        System.out.print("Email : ");
+        String emailLogIn = scanner.next();
+        System.out.print("Password : ");
+        String passLogIn = scanner.next();
+        System.out.print("2FA Code : ");
+        String twoFACode = scanner.next();
+
+        twoFA.compare(emailLogIn, passLogIn, twoFACode);
     }
 
     // choose what page to open
@@ -77,18 +89,10 @@ public class Console {
     }
 
     // Back to Homepage method
-    public static String backToHomePage(String command){
-        System.out.print("Back to Homepage ? y | n : ");
-        String answerBackToHomepage = scanner.next();
-
-        if (answerBackToHomepage.equals("y")){
-            FrontPage.choices(); // choices page
-            int userChoose = scanner.nextInt();
-            choose(userChoose); // user choose what page to open
-        } else {
-            return command;
-        }
-        return command;
+    public static void backToHomePage(){
+        FrontPage.choices(); // choices page
+        int userChoose = scanner.nextInt();
+        Console.choose(userChoose); // user choose what page to open
     }
 
     public static void videoLikeOrDislike(String videoTitle){
@@ -109,10 +113,11 @@ public class Console {
                 break;
             case "n":
                 // Back to homepage
-                backToHomePage("deleteVideo()");
+                backToHomePage();
                 break;
             default:
                 System.out.println("y or n only 😊");
+                deleteVideo();
         }
     }
 
@@ -140,6 +145,7 @@ public class Console {
                 break;
             default:
                 System.out.println("AVI | FLV | WMV only 😊");
+                anotherFormat();
         }
     }
 }
