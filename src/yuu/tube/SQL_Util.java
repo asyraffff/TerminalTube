@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class SQL_Util {
-    public static final String credentials = "jdbc:mysql://localhost:3306/YoutubeDB?user=root&password=tropika17&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    public static final String credentials = "jdbc:mysql://localhost:3306/YoutubeDB?user=root&password=password&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC";
     static Connection connection = null;
 
     // initiate the connection with the database
